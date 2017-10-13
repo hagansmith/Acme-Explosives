@@ -1,0 +1,20 @@
+{
+    "categories": [
+        {
+            "id": 0,
+            "name": "1.4G Consumer Fireworks"
+        },
+        {
+            "id": 1,
+            "name": "1.3G  Display Fireworks"
+        },
+        {
+            "id": 2,
+            "name": "1.2 Light Demolition"
+        },
+        {
+            "id": 3,
+            "name": "1.1 Demolition"
+        }
+    ]
+}

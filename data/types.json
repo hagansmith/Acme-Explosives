@@ -1,0 +1,28 @@
+{
+    "types": [
+        {
+            "id": 0,
+            "category": 0,
+            "name": "personal",
+            "description": "Fireworks intended for recreational use during holiday celebrations"
+        },
+        {
+            "id": 1,
+            "category": 1,
+            "name": "commercial",
+            "description": "Fireworks intended for display use by persons with commercial licenses"
+        },
+        {
+            "id": 2,
+            "category": 2,
+            "name": "hazardous",
+            "description": "Explosives with hazardous properties"
+        },
+        {
+            "id": 3,
+            "category": 3,
+            "name": "demoltion",
+            "description": "Demolition grade explosives"
+        }
+    ]
+}
