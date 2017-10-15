@@ -1,3 +1,9 @@
 "use strict";
 
-console.log("all connected");
+require('./events');
+var data = require('./data');
+
+
+$(document).ready(function() {
+	data.initializer();
+});
