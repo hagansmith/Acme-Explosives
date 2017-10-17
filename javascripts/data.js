@@ -1,11 +1,11 @@
 "use strict";
 
-var dom = require('./dom');
-var fireworks = [];
+let dom = require('./dom');
+let fireworks = [];
 
 
 // --- PROMISES --- //
-var categories = function(){
+let categories = function(){
 	return new Promise(function(resolve, reject){
 		$.ajax('./data/categories.json').done(function(data1){
 			resolve(data1);
@@ -16,7 +16,7 @@ var categories = function(){
 	});
 };
 
-var products = function(){
+let products = function(){
 	return new Promise(function(resolve, reject){
 		$.ajax('./data/products.json').done(function(data2){
 			resolve(data2);
@@ -26,7 +26,7 @@ var products = function(){
 	});
 };
 
-var types = function(){
+let types = function(){
 	return new Promise(function(resolve, reject){
 		$.ajax('./data/types.json').done(function(data3){
 			resolve(data3);
@@ -37,67 +37,55 @@ var types = function(){
 };
 
 // --- Promise Calls --- //
-var categoriesGetter = function(){
+let categoriesGetter = function(){
 	categories();
 };
 
-// Use the selection to filter results and initiate data call
+//Use the selection to filter results and initiate data call
 const dataFilter = (input) => {
 	Promise.all([categories(), types(), products()]).then((results) => {
 		results[0].categories.forEach(function(category){
-			//if (category.name === input) {
 			results[1].types.forEach(function(type){
 				if (category.id === type.category) {
-					type.catName = category.name;}
-					console.log(type);
+					type.catName = category.name;
+				}
 				results[2].products.forEach(function(product){
-					console.log(product);
-					//product.forEach(function(item){
-					//console.log(item);
-
-					if (product.type === type.id) {
-						product.typeName = type.name;
-						product.category = type.catName;
+					let key = Object.keys(product);
+					let fullProduct = product[key];
+					if (fullProduct.type === type.id) {
+						fullProduct.typeName = type.name;
+						fullProduct.category = type.catName;
 					}
-						//console.log(product);
-					//});
+
+					if (fullProduct.category === input) {
+						dom.productsDom(fullProduct);
+					}
+
 				});
 			});
 		});
 	});
 };
 
-
-// 	let productArray=[];
-// 	categories().then(function(result){
-// 		 result.forEach(function(category){
-// 			 if (category.name === input) {
-// 				 productArray.push(category);
-// 			 }
-// 		});
-// 	}).then(types().then(function(productArray){
-// 		console.log('types',types);
-// 	}));
-// 	console.log('final product array', productArray);
-// };
 	//call write to dom table
 
 // --- DOM Functions --- //
-var categoriesDom = function(thing){
+let categoriesDom = function(thing){
 	thing.forEach(function(cat){
-		dom(cat);
+		dom.categorySelect(cat);
 	});
 };
 
-// Write to Dom table
-	//write the products to the dom
+let productDom = function(products){
+
+};
 
 // --- Master Functions --- //
-var initializer = function(){
+const initializer = function(){
 	categoriesGetter();
 };
 
-var getFireworks = function(){
+const getFireworks = function(){
 	return fireworks;
 };
 
