@@ -1,5 +1,9 @@
 "use strict";
 
+var filter = require('./data');
+
 $('#category-selector').change((event) => {
-  console.log(event.target.value);
+  filter.dataFilter(event.target.value);
 });
+
+module.exports = {};

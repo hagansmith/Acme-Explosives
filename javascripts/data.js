@@ -1,65 +1,82 @@
 "use strict";
 
-var dom = require('./dom');
+let dom = require('./dom');
 
-var fireworks = [];
-
-var categories = function(){
+// --- PROMISES --- //
+let categories = function(){
 	return new Promise(function(resolve, reject){
 		$.ajax('./data/categories.json').done(function(data1){
-			resolve(data1.categories);
-      categoriesDom(data1.categories);
+			resolve(data1);
 		}).fail(function(error1){
 			reject(error1);
 		});
 	});
 };
 
-var products = function(){
+let products = function(){
 	return new Promise(function(resolve, reject){
 		$.ajax('./data/products.json').done(function(data2){
-			resolve(data2.products);
+			resolve(data2);
 		}).fail(function(error2){
 			reject(error2);
 		});
 	});
 };
 
-var types = function(){
+let types = function(){
 	return new Promise(function(resolve, reject){
 		$.ajax('./data/types.json').done(function(data3){
-			resolve(data3.types);
+			resolve(data3);
 		}).fail(function(error3){
 			reject(error3);
 		});
 	});
 };
 
-var fireworksGetter = function(){
-	Promise.all([categories(), products(), types()]).then(function(results){
-		results.forEach(function(result){
-      result.forEach(function(firework){
-        fireworks.push(firework);
-			});
+
+//Use the selection to filter results and initiate data call
+const productsToDom = () => {
+	Promise.all([categories(), types(), products()]).then((results) => {
+		 let categories = results[0].categories;
+		 categoriesDom(categories);
+		 let types = results[1].types;
+		 let products = results[2].products;
+		categories.forEach((category) => {
+			types.forEach((type) => {
+	 			if (category.id === type.category) {
+					type.catName = category.name;
+					type.categoryID = category.id;
+	 			}
+				products.forEach(function(product){
+					let key = Object.keys(product);
+					let fullProduct = product[key];
+					if (fullProduct.type === type.id) {
+						fullProduct.typeName = type.name;
+						fullProduct.category = type.catName;
+						fullProduct.categoryID = type.categoryID;
+					}
+				});
+	 		});
 		});
-		//makeBigBoom();
-	}).catch(function(error){
-		console.log("error from Promise.all", error);
+			dom.productsDom(products);
 	});
 };
 
-var categoriesDom = function(thing){
+// --- DOM Functions --- //
+let categoriesDom = function(thing){
 	thing.forEach(function(cat){
-		dom(cat);
+		dom.categorySelect(cat);
 	});
 };
 
-var initializer = function(){
-	fireworksGetter();
+let dataFilter = function (event) {
+	$(`.item`).addClass('hidden');
+	$(`.${event}`).removeClass('hidden');
 };
 
-var getFireworks = function(){
-	return fireworks;
+// --- Master Functions --- //
+const initializer = function(){
+	productsToDom();
 };
 
-module.exports = {initializer, getFireworks};
+module.exports = {initializer, dataFilter};
