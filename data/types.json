@@ -3,26 +3,74 @@
         {
             "id": 0,
             "category": 0,
-            "name": "personal",
-            "description": "Fireworks intended for recreational use during holiday celebrations"
+            "name": "light duty personal",
+            "description": "Fireworks intended for recreational use during holiday celebrations, unlikely to cause harm"
         },
         {
             "id": 1,
-            "category": 1,
-            "name": "commercial",
-            "description": "Fireworks intended for display use by persons with commercial licenses"
+            "category": 0,
+            "name": "medium duty personal",
+            "description": "Fireworks intended for recreational use during holiday celebrations, can cause harm"
         },
         {
             "id": 2,
-            "category": 2,
-            "name": "hazardous",
-            "description": "Explosives with hazardous properties"
+            "category": 0,
+            "name": "serious personal",
+            "description": "Fireworks for the adult user. Highest rated personal class before needing a license"
         },
         {
             "id": 3,
+            "category": 1,
+            "name": "light commercial",
+            "description": "Fireworks grade explosives for use in small demonstrations"
+        },
+        {
+            "id": 4,
+            "category": 1,
+            "name": "show commercial",
+            "description": "Large fireworks grade explosives for use in professional large outdoor shows"
+        },
+        {
+            "id": 5,
+            "category": 1,
+            "name": "indoor commercial",
+            "description": "Fireworks intended for display use indoors by persons with commercial licenses"
+        },
+        {
+            "id": 6,
+            "category": 2,
+            "name": "hazardous dry",
+            "description": "Dry explosives with hazardous properties"
+        },
+        {
+            "id": 7,
+            "category": 2,
+            "name": "hazardous liquid",
+            "description": "Liquid explosives with hazardous properties"
+        },
+        {
+            "id": 8,
+            "category": 2,
+            "name": "hazardous gas",
+            "description": "Gas explosives with hazardous properties"
+        },
+        {
+            "id":9,
             "category": 3,
-            "name": "demoltion",
-            "description": "Demolition grade explosives"
+            "name": "light demoltion",
+            "description": "Light demolition grade explosives for structure demolition"
+        },
+        {
+            "id": 10,
+            "category": 3,
+            "name": "medium demoltion",
+            "description": "Medium demolition grade explosives for rock blasting"
+        },
+        {
+            "id": 11,
+            "category": 3,
+            "name": "nuclear",
+            "description": "Nuclear grade explosives"
         }
     ]
 }

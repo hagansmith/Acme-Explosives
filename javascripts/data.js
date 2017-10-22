@@ -1,15 +1,12 @@
 "use strict";
 
 let dom = require('./dom');
-let fireworks = [];
-
 
 // --- PROMISES --- //
 let categories = function(){
 	return new Promise(function(resolve, reject){
 		$.ajax('./data/categories.json').done(function(data1){
 			resolve(data1);
-      categoriesDom(data1.categories);
 		}).fail(function(error1){
 			reject(error1);
 		});
@@ -36,38 +33,34 @@ let types = function(){
 	});
 };
 
-// --- Promise Calls --- //
-let categoriesGetter = function(){
-	categories();
-};
 
 //Use the selection to filter results and initiate data call
-const dataFilter = (input) => {
+const productsToDom = () => {
 	Promise.all([categories(), types(), products()]).then((results) => {
-		results[0].categories.forEach(function(category){
-			results[1].types.forEach(function(type){
-				if (category.id === type.category) {
+		 let categories = results[0].categories;
+		 categoriesDom(categories);
+		 let types = results[1].types;
+		 let products = results[2].products;
+		categories.forEach((category) => {
+			types.forEach((type) => {
+	 			if (category.id === type.category) {
 					type.catName = category.name;
-				}
-				results[2].products.forEach(function(product){
+					type.categoryID = category.id;
+	 			}
+				products.forEach(function(product){
 					let key = Object.keys(product);
 					let fullProduct = product[key];
 					if (fullProduct.type === type.id) {
 						fullProduct.typeName = type.name;
 						fullProduct.category = type.catName;
+						fullProduct.categoryID = type.categoryID;
 					}
-
-					if (fullProduct.category === input) {
-						dom.productsDom(fullProduct);
-					}
-
 				});
-			});
+	 		});
 		});
+			dom.productsDom(products);
 	});
 };
-
-	//call write to dom table
 
 // --- DOM Functions --- //
 let categoriesDom = function(thing){
@@ -76,17 +69,14 @@ let categoriesDom = function(thing){
 	});
 };
 
-let productDom = function(products){
-
+let dataFilter = function (event) {
+	$(`.item`).addClass('hidden');
+	$(`.${event}`).removeClass('hidden');
 };
 
 // --- Master Functions --- //
 const initializer = function(){
-	categoriesGetter();
+	productsToDom();
 };
 
-const getFireworks = function(){
-	return fireworks;
-};
-
-module.exports = {initializer, getFireworks, dataFilter};
+module.exports = {initializer, dataFilter};

@@ -5,7 +5,7 @@ let prodDiv = $("#prodTable");
 
 const categorySelect = function(category) {
   let domString = '';
-      domString +=   `<option value="${category.name}">${category.name}</option>`;
+      domString +=   `<option id="${category.name}" value="${category.id}">${category.name}</option>`;
 	printToDom(domString);
 };
 
@@ -14,14 +14,17 @@ const printToDom = function(string) {
 };
 
 // --- Write the selected products and their info to the DOM --- //
-const productsDom = function(item) {
+const productsDom = function(items) {
   let prodString = '';
-  for (var key in item) {
-  prodString += `<tr>`;
-  prodString += `<td>${item.name}</td>`;
-  prodString += `<td>${item.category}</td>`;
-  prodString += `<td>${item.typeName}</td>`;
-  prodString += `</tr>`;
+  for (let i = 0; i < items.length; i ++) {
+    let keys = Object.keys(items[i]);
+    let fullProduct = items[i][keys];
+      prodString += `<tr class="item ${fullProduct.categoryID} hidden">`;
+      prodString += `<td>${fullProduct.name}</td>`;
+      prodString += `<td id="${fullProduct.categoryID}">${fullProduct.category}</td>`;
+      prodString += `<td>${fullProduct.typeName}</td>`;
+      prodString += `<td>${fullProduct.description}</td>`;
+      prodString += `</tr>`;
   }
   printProducts(prodString);
 };
